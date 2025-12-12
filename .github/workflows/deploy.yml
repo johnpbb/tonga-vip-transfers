@@ -1,0 +1,62 @@
+name: Deploy to Opalstack
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+
+    - name: Install Dependencies
+      run: npm install
+
+    - name: Build Project
+      run: npm run build
+
+    - name: Prepare Deployment Files
+      run: |
+        mkdir -p deploy_bundle
+        # Copy compiled frontend
+        cp -r dist/* deploy_bundle/
+        # Copy backend entry point
+        cp index.js deploy_bundle/
+        # Copy server-specific package.json (Node 10 compatible)
+        cp server_node10/package.json deploy_bundle/
+
+    - name: Deploy to Server
+      uses: appleboy/scp-action@v0.1.7
+      with:
+        host: ${{ secrets.OPAL_HOST }}
+        username: ${{ secrets.OPAL_USER }}
+        key: ${{ secrets.SSH_PRIVATE_KEY }}
+        port: 27737
+        source: "deploy_bundle/*"
+        target: "/home/tongavip/apps/tonga-vip-transfers/"
+        strip_components: 1
+
+    - name: Install Prod Deps & Restart
+      uses: appleboy/ssh-action@v1.0.3
+      with:
+        host: ${{ secrets.OPAL_HOST }}
+        username: ${{ secrets.OPAL_USER }}
+        key: ${{ secrets.SSH_PRIVATE_KEY }}
+        port: 27737
+        script: |
+          cd /home/tongavip/apps/tonga-vip-transfers
+          # Stop the server
+          ./stop || true
+          # Install server dependencies (Express, Nodemailer)
+          npm install --production
+          # Start the server
+          ./start
