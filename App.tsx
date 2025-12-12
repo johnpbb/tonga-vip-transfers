@@ -10,6 +10,7 @@ import { About } from './pages/About';
 import { Services } from './pages/Services';
 import { FleetPage } from './pages/Fleet';
 import { Contact } from './pages/Contact';
+import { AdminDashboard } from './pages/AdminDashboard';
 
 // Scroll to top on route change
 const ScrollToTop = () => {
@@ -33,6 +34,7 @@ function App() {
             <Route path="/services" element={<Services />} />
             <Route path="/fleet" element={<FleetPage />} />
             <Route path="/contact" element={<Contact />} />
+            <Route path="/admin" element={<AdminDashboard />} />
             {/* Fallback route */}
             <Route path="*" element={<Home />} />
           </Routes>
