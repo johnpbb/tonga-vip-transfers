@@ -39,7 +39,7 @@ jobs:
       with:
         host: ${{ secrets.OPAL_HOST }}
         username: ${{ secrets.OPAL_USER }}
-        key: ${{ secrets.SSH_PRIVATE_KEY }}
+        password: ${{ secrets.OPAL_PASSWORD }}
         port: 27737
         source: "deploy_bundle/*"
         target: "/home/tongavip/apps/tonga-vip-transfers/"
@@ -53,7 +53,7 @@ jobs:
       with:
         host: ${{ secrets.OPAL_HOST }}
         username: ${{ secrets.OPAL_USER }}
-        key: ${{ secrets.SSH_PRIVATE_KEY }}
+        password: ${{ secrets.OPAL_PASSWORD }}
         port: 27737
         debug: true
         insecure_ignore_fingerprint: true
