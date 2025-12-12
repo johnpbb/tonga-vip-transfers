@@ -34,19 +34,13 @@ jobs:
         # Copy server-specific package.json (Node 10 compatible)
         cp server_node10/package.json deploy_bundle/
 
-    - name: Deploy to Server
-      uses: appleboy/scp-action@v0.1.7
-      with:
-        host: ${{ secrets.OPAL_HOST }}
-        username: ${{ secrets.OPAL_USER }}
-        password: ${{ secrets.OPAL_PASSWORD }}
-        port: 27737
-        source: "deploy_bundle/*"
-        target: "/home/tongavip/apps/tonga-vip-transfers/"
-        strip_components: 1
-        debug: true
-        timeout: 120s
-        command_timeout: 30m
+    - name: Install SSHPass
+      run: sudo apt-get install -y sshpass
+
+    - name: Deploy with Rsync
+      run: |
+        # Use sshpass to provide password to rsync
+        sshpass -p "${{ secrets.OPAL_PASSWORD }}" rsync -avz --delete -e "ssh -p 27737 -o StrictHostKeyChecking=no" deploy_bundle/ ${{ secrets.OPAL_USER }}@${{ secrets.OPAL_HOST }}:/home/tongavip/apps/tonga-vip-transfers/
 
     - name: Install Prod Deps & Restart
       uses: appleboy/ssh-action@v1.0.3
