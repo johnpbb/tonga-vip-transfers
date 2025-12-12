@@ -51,7 +51,6 @@ jobs:
         password: ${{ secrets.OPAL_PASSWORD }}
         port: 22
         debug: true
-        insecure_ignore_fingerprint: true
         timeout: 120s
         command_timeout: 30m
         script: |
