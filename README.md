@@ -7,6 +7,8 @@
 
 This contains everything you need to run your app locally.
 
+> **Deployment Status**: Automated deployment configured via GitHub Actions.
+
 View your app in AI Studio: https://ai.studio/apps/drive/1z5pL_Oz97-2d5p95r9O3jDu4xCgQWpkR
 
 ## Run Locally
