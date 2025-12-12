@@ -33,6 +33,9 @@ jobs:
         cp index.js deploy_bundle/
         # Copy server-specific package.json (Node 10 compatible)
         cp server_node10/package.json deploy_bundle/
+        # Copy start/stop scripts
+        cp start deploy_bundle/
+        cp stop deploy_bundle/
 
     - name: Install SSHPass
       run: sudo apt-get install -y sshpass

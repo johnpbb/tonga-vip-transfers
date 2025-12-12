@@ -1,0 +1,12 @@
+#!/bin/bash
+export PORT=27737
+
+# Stop any running instance
+if [ -f save_pid.txt ]; then
+  kill $(cat save_pid.txt) || true
+fi
+
+# Start new instance
+nohup node index.js > Log.out 2>&1 &
+echo $! > save_pid.txt
+echo "App started on port $PORT with PID $(cat save_pid.txt)"

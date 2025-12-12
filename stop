@@ -1,0 +1,8 @@
+#!/bin/bash
+if [ -f save_pid.txt ]; then
+  kill $(cat save_pid.txt)
+  rm save_pid.txt
+  echo "App stopped"
+else
+  echo "No pid file found"
+fi
