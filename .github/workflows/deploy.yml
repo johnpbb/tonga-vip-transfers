@@ -44,6 +44,8 @@ jobs:
         source: "deploy_bundle/*"
         target: "/home/tongavip/apps/tonga-vip-transfers/"
         strip_components: 1
+        debug: true
+        insecure_ignore_fingerprint: true
 
     - name: Install Prod Deps & Restart
       uses: appleboy/ssh-action@v1.0.3
@@ -52,6 +54,8 @@ jobs:
         username: ${{ secrets.OPAL_USER }}
         key: ${{ secrets.SSH_PRIVATE_KEY }}
         port: 27737
+        debug: true
+        insecure_ignore_fingerprint: true
         script: |
           cd /home/tongavip/apps/tonga-vip-transfers
           # Stop the server
