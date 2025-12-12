@@ -44,7 +44,7 @@ jobs:
       run: |
         # Use sshpass to provide password to rsync
         # NOTE: Port 22 is standard for SSH. 27737 is the App port (HTTP).
-        sshpass -p "${{ secrets.OPAL_PASSWORD }}" rsync -avz --delete -e "ssh -p 22 -o StrictHostKeyChecking=no" deploy_bundle/ ${{ secrets.OPAL_USER }}@${{ secrets.OPAL_HOST }}:/home/tongavip/apps/tonga-vip-transfers/
+        sshpass -p "${{ secrets.OPAL_PASSWORD }}" rsync -avz --delete --exclude 'bookings.json' -e "ssh -p 22 -o StrictHostKeyChecking=no" deploy_bundle/ ${{ secrets.OPAL_USER }}@${{ secrets.OPAL_HOST }}:/home/tongavip/apps/tonga-vip-transfers/
 
     - name: Install Prod Deps & Restart
       uses: appleboy/ssh-action@v1.0.3
