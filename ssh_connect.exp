@@ -1,6 +1,0 @@
-#!/usr/bin/expect -f
-set timeout 20
-spawn ssh -o StrictHostKeyChecking=no -p 27737 tongavip@vps34.opalstack.com "pwd && ls -la /home/tongavip/apps/tonga-vip-transfers"
-expect "password:"
-send "X16kDrjX7koGA28E\r"
-expect eof

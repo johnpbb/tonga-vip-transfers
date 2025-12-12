@@ -45,7 +45,7 @@ app.post('/api/send-email', (req, res) => {
 app.use(express.static(__dirname));
 
 // Handle client-side routing - serve index.html for all routes
-app.get('*', (req, res) => {
+app.get(/(.*)/, (req, res) => {
     res.sendFile(path.join(__dirname, 'index.html'));
 });
 
