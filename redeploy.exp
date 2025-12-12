@@ -1,0 +1,29 @@
+#!/usr/bin/expect -f
+set timeout 60
+log_user 1
+
+puts "\n=== Re-uploading index.js ===\n"
+
+# Upload fresh index.js
+spawn scp -o StrictHostKeyChecking=no -P 27737 index.js tongavip@vps34.opalstack.com:/home/tongavip/apps/tonga-vip-transfers/index.js
+expect {
+    "password:" {
+        send "X16kDrjX7koGA28E\r"
+        exp_continue
+    }
+    eof
+}
+
+puts "\n=== Installing Express and restarting ===\n"
+
+# Install Express and restart
+spawn ssh -o StrictHostKeyChecking=no -p 27737 tongavip@vps34.opalstack.com "cd /home/tongavip/apps/tonga-vip-transfers && npm install express && touch index.js && echo 'Done - app should restart automatically'"
+expect {
+    "password:" {
+        send "X16kDrjX7koGA28E\r"
+        exp_continue
+    }
+    eof
+}
+
+puts "\n=== Complete ===\n"

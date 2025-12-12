@@ -1,0 +1,14 @@
+#!/usr/bin/expect -f
+set timeout 30
+log_user 1
+
+puts "\n=== Checking Opalstack app configuration ===\n"
+
+spawn ssh -o StrictHostKeyChecking=no -p 27737 tongavip@vps34.opalstack.com "cd /home/tongavip/apps/tonga-vip-transfers && echo '=== PORT Configuration ===' && env | grep -i port || echo 'No PORT env var' && echo '\n=== Process Details ===' && ps aux | grep node | grep -v grep && echo '\n=== Checking for .env file ===' && cat .env 2>/dev/null || echo 'No .env file' && echo '\n=== Checking package.json ===' && cat package.json 2>/dev/null | head -20"
+expect {
+    "password:" {
+        send "X16kDrjX7koGA28E\r"
+        exp_continue
+    }
+    eof
+}

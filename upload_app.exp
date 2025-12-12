@@ -1,0 +1,29 @@
+#!/usr/bin/expect -f
+set timeout 60
+log_user 1
+
+# Create tarball of dist folder
+spawn tar -czf dist.tar.gz -C dist .
+expect eof
+
+# Upload the tarball
+spawn scp -o StrictHostKeyChecking=no -P 27737 dist.tar.gz tongavip@vps34.opalstack.com:/home/tongavip/apps/tonga-vip-transfers/
+expect {
+    "password:" {
+        send "X16kDrjX7koGA28E\r"
+        exp_continue
+    }
+    eof
+}
+
+puts "\n=== Upload complete, now extracting on server ===\n"
+
+# Extract on server and clean up
+spawn ssh -o StrictHostKeyChecking=no -p 27737 tongavip@vps34.opalstack.com "cd /home/tongavip/apps/tonga-vip-transfers && tar -xzf dist.tar.gz && rm dist.tar.gz && ls -la"
+expect {
+    "password:" {
+        send "X16kDrjX7koGA28E\r"
+        exp_continue
+    }
+    eof
+}

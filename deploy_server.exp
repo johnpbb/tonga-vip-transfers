@@ -1,0 +1,39 @@
+#!/usr/bin/expect -f
+set timeout 60
+log_user 1
+
+puts "\n=== Uploading server files ===\n"
+
+# Upload server.js
+spawn scp -o StrictHostKeyChecking=no -P 27737 server.js tongavip@vps34.opalstack.com:/home/tongavip/apps/tonga-vip-transfers/
+expect {
+    "password:" {
+        send "X16kDrjX7koGA28E\r"
+        exp_continue
+    }
+    eof
+}
+
+# Upload package.json as package.json
+spawn scp -o StrictHostKeyChecking=no -P 27737 server-package.json tongavip@vps34.opalstack.com:/home/tongavip/apps/tonga-vip-transfers/package.json
+expect {
+    "password:" {
+        send "X16kDrjX7koGA28E\r"
+        exp_continue
+    }
+    eof
+}
+
+puts "\n=== Installing dependencies and starting server ===\n"
+
+# Install dependencies and start the server
+spawn ssh -o StrictHostKeyChecking=no -p 27737 tongavip@vps34.opalstack.com "cd /home/tongavip/apps/tonga-vip-transfers && npm install && echo 'GEMINI_API_KEY=your_api_key_here' > .env && PORT=3030 nohup node server.js > server.log 2>&1 & echo 'Server started' && sleep 2 && cat server.log"
+expect {
+    "password:" {
+        send "X16kDrjX7koGA28E\r"
+        exp_continue
+    }
+    eof
+}
+
+puts "\n=== Deployment complete ===\n"

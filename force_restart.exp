@@ -1,0 +1,28 @@
+#!/usr/bin/expect -f
+set timeout 60
+log_user 1
+
+puts "\n=== Checking files and forcing restart ===\n"
+
+spawn ssh -o StrictHostKeyChecking=no -p 27737 tongavip@vps34.opalstack.com "cd /home/tongavip/apps/tonga-vip-transfers && echo '--- Listing files ---' && ls -lah && echo '\n--- Checking app.mjs ---' && head -20 app.mjs && echo '\n--- Checking index.html ---' && ls -lah index.html && echo '\n--- Killing all node processes ---' && pkill -9 node ; sleep 3 && echo 'Processes killed' && echo '\n--- Touching app.mjs to trigger restart ---' && touch app.mjs && echo 'Done'"
+expect {
+    "password:" {
+        send "X16kDrjX7koGA28E\r"
+        exp_continue
+    }
+    eof
+}
+
+puts "\n=== Waiting for app to restart ===\n"
+sleep 5
+
+puts "\n=== Checking if process is running ===\n"
+
+spawn ssh -o StrictHostKeyChecking=no -p 27737 tongavip@vps34.opalstack.com "ps aux | grep node | grep -v grep"
+expect {
+    "password:" {
+        send "X16kDrjX7koGA28E\r"
+        exp_continue
+    }
+    eof
+}

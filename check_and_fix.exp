@@ -1,0 +1,14 @@
+#!/usr/bin/expect -f
+set timeout 30
+log_user 1
+
+puts "\n=== Checking index.js and redeploying ===\n"
+
+spawn ssh -o StrictHostKeyChecking=no -p 27737 tongavip@vps34.opalstack.com "cd /home/tongavip/apps/tonga-vip-transfers && echo '=== Current index.js ===' && cat index.js 2>/dev/null | head -20 && echo '\n=== Checking if Express is installed ===' && npm list express 2>/dev/null || echo 'Express not installed' && echo '\n=== Installing dependencies ===' && npm install express 2>&1 | tail -10"
+expect {
+    "password:" {
+        send "X16kDrjX7koGA28E\r"
+        exp_continue
+    }
+    eof
+}

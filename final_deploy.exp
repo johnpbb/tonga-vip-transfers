@@ -1,0 +1,32 @@
+#!/usr/bin/expect -f
+set timeout 90
+log_user 1
+
+puts "\n=== Uploading all server entry point files ===\n"
+
+# Upload index.js
+spawn scp -o StrictHostKeyChecking=no -P 27737 index.js tongavip@vps34.opalstack.com:/home/tongavip/apps/tonga-vip-transfers/
+expect {
+    "password:" {
+        send "X16kDrjX7koGA28E\r"
+        exp_continue
+    }
+    eof
+}
+
+puts "\n=== Removing old Hello World file and restarting ===\n"
+
+# Find and remove the Hello World file, then restart
+spawn ssh -o StrictHostKeyChecking=no -p 27737 tongavip@vps34.opalstack.com "cd /home/tongavip/apps/tonga-vip-transfers && find . -maxdepth 1 \\( -name '*.js' -o -name '*.mjs' \\) -exec grep -l 'Hello World' {} \\; | xargs -r rm -v && echo 'Removed Hello World files' && pkill -9 node && sleep 3 && touch index.js app.mjs && echo 'Triggered restart'"
+expect {
+    "password:" {
+        send "X16kDrjX7koGA28E\r"
+        exp_continue
+    }
+    eof
+}
+
+puts "\n=== Waiting for restart ===\n"
+sleep 5
+
+puts "\n=== Deployment complete ===\n"
