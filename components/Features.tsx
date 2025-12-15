@@ -6,27 +6,27 @@ export const Features: React.FC = () => {
       <div className="container mx-auto px-6">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
           <div className="relative">
-             <div className="absolute -top-4 -left-4 w-24 h-24 bg-red-100 rounded-full z-0"></div>
-             <img 
-              src="https://picsum.photos/800/600?grayscale" 
-              alt="Chauffeur opening car door" 
-              className="relative z-10 rounded-lg shadow-2xl"
+            <div className="absolute -top-4 -left-4 w-24 h-24 bg-red-100 rounded-full z-0"></div>
+            <img
+              src="/images/feature-chauffeur.png"
+              alt="Chauffeur opening car door"
+              className="relative z-10 w-full rounded-lg shadow-2xl object-cover"
             />
             <div className="absolute -bottom-6 -right-6 bg-tonga-red p-8 rounded-lg text-white z-20 hidden md:block">
               <p className="text-3xl font-serif font-bold">10+</p>
               <p className="text-sm uppercase tracking-wide opacity-80">Years of Service</p>
             </div>
           </div>
-          
+
           <div className="space-y-8">
             <h2 className="text-4xl font-serif font-bold text-tonga-red">
-              More Than Just A Ride,<br/>
+              More Than Just A Ride,<br />
               It's An Experience.
             </h2>
             <p className="text-gray-600 text-lg">
               We understand that your journey begins the moment you land. Our dedication to punctuality, discretion, and local knowledge sets us apart in Tonga.
             </p>
-            
+
             <div className="space-y-6">
               {[
                 { title: "Meet & Greet", desc: "Personalized welcome at the arrivals hall with nameboard." },

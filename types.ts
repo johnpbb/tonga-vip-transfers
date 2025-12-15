@@ -16,13 +16,34 @@ export interface Testimonial {
   rating: number;
 }
 
+export interface AddOn {
+  id: string;
+  name: string;
+  description: string;
+  price: number;
+  image: string;
+}
+
+export interface SelectedAddOn {
+  id: string;
+  quantity: number;
+}
+
 export interface BookingDetails {
   pickup: string;
   dropoff: string;
   date: string;
   time: string;
-  passengers: string;
+  passengers: string; // Total count
+  passengerCounts: {
+    adults: number;
+    children: number;
+    infants: number;
+  };
+  bags: number;
   vehicleType: string;
+  returnDate?: string;
+  addOns: SelectedAddOn[];
 }
 
 export enum ChatRole {

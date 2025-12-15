@@ -6,9 +6,9 @@ export const Hero: React.FC = () => {
     <section className="relative min-h-screen flex items-center pt-24 pb-12 lg:pt-0 lg:pb-0 overflow-hidden bg-gray-900">
       {/* Background Image with Overlay */}
       <div className="absolute inset-0 z-0">
-        <img 
-          src="https://picsum.photos/1920/1080?grayscale&blur=2" 
-          alt="Luxury car background" 
+        <img
+          src="/images/tonga-hero.jpg"
+          alt="Ha'amonga 'a Maui"
           className="w-full h-full object-cover object-center"
         />
         <div className="absolute inset-0 bg-gradient-to-r from-tonga-red/95 via-tonga-red/80 to-transparent"></div>
@@ -17,7 +17,7 @@ export const Hero: React.FC = () => {
 
       <div className="container mx-auto px-6 relative z-10 w-full">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-          
+
           {/* Left Content */}
           <div className="lg:col-span-7 text-white space-y-6 pt-10 lg:pt-0">
             <div className="inline-block px-4 py-1 border border-white text-white rounded-full text-sm font-semibold tracking-widest uppercase mb-2">
@@ -28,10 +28,10 @@ export const Hero: React.FC = () => {
               Explore in <span className="italic">Comfort.</span>
             </h1>
             <p className="text-xl text-gray-100 max-w-2xl font-light drop-shadow-md">
-              Experience the warmth of Tonga with our premium VIP transfer service. 
+              Experience the warmth of Tonga with our premium VIP transfer service.
               From Fua'amotu Airport to your resort, we ensure a seamless, professional journey.
             </p>
-            
+
             <div className="flex flex-wrap gap-4 pt-4">
               <div className="flex items-center gap-2">
                 <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -58,7 +58,7 @@ export const Hero: React.FC = () => {
           <div className="lg:col-span-5 w-full">
             <BookingForm />
           </div>
-          
+
         </div>
       </div>
     </section>

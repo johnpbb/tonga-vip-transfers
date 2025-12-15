@@ -5,7 +5,7 @@ export const About: React.FC = () => {
   return (
     <div className="bg-white">
       <PageHeader title="About Us" subtitle="Our Story & Values" />
-      
+
       <div className="container mx-auto px-6 py-20">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center mb-20">
           <div>
@@ -23,11 +23,11 @@ export const About: React.FC = () => {
             </div>
           </div>
           <div className="relative">
-             <img src="https://picsum.photos/600/500?grayscale" alt="Tongan Driver" className="rounded-lg shadow-xl" />
-             <div className="absolute -bottom-6 -left-6 bg-white border-2 border-tonga-red p-6 rounded-lg shadow-lg">
-               <p className="font-serif text-2xl font-bold text-tonga-red">Malo e lelei</p>
-               <p className="text-gray-800 text-sm font-bold uppercase">Warm Greetings</p>
-             </div>
+            <img src="/images/about-driver.png" alt="Tongan Driver" className="rounded-lg shadow-xl w-full object-cover" />
+            <div className="absolute -bottom-6 -left-6 bg-white border-2 border-tonga-red p-6 rounded-lg shadow-lg">
+              <p className="font-serif text-2xl font-bold text-tonga-red">Malo e lelei</p>
+              <p className="text-gray-800 text-sm font-bold uppercase">Warm Greetings</p>
+            </div>
           </div>
         </div>
 

@@ -1,0 +1,16 @@
+#!/usr/bin/expect -f
+set timeout 20
+log_user 1
+
+spawn ssh -o StrictHostKeyChecking=no -p 22 tongavip@vps34.opalstack.com
+expect {
+    "*assword:" { send "X16kDrjX7koGA28E\r" }
+    timeout { puts "Connection timed out"; exit 1 }
+}
+expect "$ "
+send "ps aux | grep 'node index.js'\r"
+expect "$ "
+send "cat /home/tongavip/apps/tonga-vip-transfers/save_pid.txt\r"
+expect "$ "
+send "exit\r"
+expect eof

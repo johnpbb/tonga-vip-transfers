@@ -6,17 +6,17 @@ interface PageHeaderProps {
   image?: string;
 }
 
-export const PageHeader: React.FC<PageHeaderProps> = ({ 
-  title, 
+export const PageHeader: React.FC<PageHeaderProps> = ({
+  title,
   subtitle,
-  image = "https://picsum.photos/1920/600?grayscale&blur=2"
+  image = "/images/page-header-bg.png"
 }) => {
   return (
     <section className="relative pt-32 pb-20 bg-gray-900 overflow-hidden">
       <div className="absolute inset-0 z-0">
-        <img 
+        <img
           src={image}
-          alt={title} 
+          alt={title}
           className="w-full h-full object-cover object-center opacity-40"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-tonga-red/80 to-transparent"></div>

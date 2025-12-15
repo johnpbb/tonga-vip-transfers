@@ -41,10 +41,14 @@ jobs:
       run: sudo apt-get install -y sshpass
 
     - name: Deploy with Rsync
+      env:
+        SSHPASS: ${{ secrets.OPAL_PASSWORD }}
+        OPAL_USER: ${{ secrets.OPAL_USER }}
+        OPAL_HOST: ${{ secrets.OPAL_HOST }}
       run: |
-        # Use sshpass to provide password to rsync
+        # Use sshpass to provide password to rsync (reads from SSHPASS env var)
         # NOTE: Port 22 is standard for SSH. 27737 is the App port (HTTP).
-        sshpass -p "${{ secrets.OPAL_PASSWORD }}" rsync -avz --delete --exclude 'bookings.json' -e "ssh -p 22 -o StrictHostKeyChecking=no" deploy_bundle/ ${{ secrets.OPAL_USER }}@${{ secrets.OPAL_HOST }}:/home/tongavip/apps/tonga-vip-transfers/
+        sshpass -e rsync -avz --delete --exclude 'bookings.json' -e "ssh -p 22 -o StrictHostKeyChecking=no" deploy_bundle/ $OPAL_USER@$OPAL_HOST:/home/tongavip/apps/tonga-vip-transfers/
 
     - name: Install Prod Deps & Restart
       uses: appleboy/ssh-action@v1.0.3
