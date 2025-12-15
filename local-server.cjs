@@ -58,8 +58,8 @@ const transporter = nodemailer.createTransport({
     port: 465,
     secure: true, // true for 465, false for other ports
     auth: {
-        user: 'info_tvip',
-        pass: 'TtSOJGTWCEe6di3'
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS
     }
 });
 
@@ -205,8 +205,8 @@ app.delete('/api/bookings/:id', (req, res) => {
 // Admin API: Simple Login
 app.post('/api/login', (req, res) => {
     const { password } = req.body;
-    // Hardcoded password for "Simple protection"
-    if (password === 'TongaVIP2025!') {
+    // Simple protection
+    if (password === process.env.ADMIN_PASS) {
         res.json({ success: true, token: 'admin-token-123' });
     } else {
         res.status(401).json({ success: false, message: 'Invalid password' });
