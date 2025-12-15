@@ -7,11 +7,11 @@ export const Hero: React.FC = () => {
       {/* Background Image with Overlay */}
       <div className="absolute inset-0 z-0">
         <img
-          src="/images/tonga-hero.jpg"
-          alt="Ha'amonga 'a Maui"
+          src="/images/hero-bg.png"
+          alt="Tonga VIP Transfer Vehicle at Sunset"
           className="w-full h-full object-cover object-center"
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-tonga-red/95 via-tonga-red/80 to-transparent"></div>
+        <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/50 to-transparent"></div>
         <div className="absolute inset-0 bg-black/10"></div>
       </div>
 
