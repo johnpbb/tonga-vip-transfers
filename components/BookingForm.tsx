@@ -36,7 +36,7 @@ const muiTheme = createTheme({
 });
 
 // Initialize Stripe
-const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY || 'pk_test_TYooMQauvdEDq54NiTphI7jx');
+const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY || 'pk_test_51ScdpmGaX0Dq3NLEGcMCsvugs6hz2Sb7jaEX3PaitW2pPKybn8FpbAXsQiL5r5hE3ntbi0rXgtiXCKf8GbYvbOYK00EeOLFX8X');
 
 const AVAILABLE_ADDONS: AddOn[] = [
   { id: 'baby-capsule', name: 'Baby Capsule', description: 'Baby Capsule (0-6 Months)', price: 31.00, image: '/images/baby-capsule.png' },
