@@ -88,11 +88,7 @@ export const FleetPage: React.FC = () => {
                   </ul>
                 </div>
 
-                <div className="pt-4">
-                  <Link to="/">
-                    <Button>Book This Vehicle</Button>
-                  </Link>
-                </div>
+
               </div>
             </div>
           ))}

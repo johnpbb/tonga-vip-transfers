@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { Link } from 'react-router-dom';
+
 const vehicles = [
   {
     name: "Luxury Sedan",
@@ -61,9 +63,9 @@ export const Fleet: React.FC = () => {
                   </div>
                 </div>
                 <p className="text-gray-600 mb-6">{v.desc}</p>
-                <button className="text-tonga-red font-bold uppercase text-sm tracking-wider hover:text-red-800 transition-colors">
+                <Link to="/fleet" className="text-tonga-red font-bold uppercase text-sm tracking-wider hover:text-red-800 transition-colors inline-block">
                   View Details &rarr;
-                </button>
+                </Link>
               </div>
             </div>
           ))}
