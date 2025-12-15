@@ -110,6 +110,7 @@ export const BookingForm: React.FC = () => {
     bags: 0,
     vehicleType: 'sedan',
     returnDate: '',
+    email: '',
     addOns: []
   });
 
@@ -182,7 +183,7 @@ export const BookingForm: React.FC = () => {
 
   const handleNextStep = () => {
     if (step === 0) {
-      if (!formData.date || !formData.pickup || !formData.dropoff) {
+      if (!formData.date || !formData.pickup || !formData.dropoff || !formData.email) {
         alert('Please fill in all required fields');
         return;
       }
@@ -356,6 +357,9 @@ Add-ons: ${addonsList || 'None'}
 
                 <TextField fullWidth label="Drop-off Destination" name="dropoff" value={formData.dropoff} onChange={handleChange}
                   InputProps={{ readOnly: pickupContext === 'hotel', startAdornment: <InputAdornment position="start">🏁</InputAdornment> }} />
+
+                <TextField fullWidth label="Email Address" name="email" type="email" value={formData.email} onChange={handleChange}
+                  InputProps={{ startAdornment: <InputAdornment position="start">✉️</InputAdornment> }} />
 
                 <div className="grid grid-cols-2 gap-4">
                   <DatePicker label="Date" value={formData.date ? dayjs(formData.date) : null} onChange={handleDateChange('date')} slotProps={{ textField: { fullWidth: true } }} />

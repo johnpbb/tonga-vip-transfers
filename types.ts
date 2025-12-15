@@ -43,6 +43,7 @@ export interface BookingDetails {
   bags: number;
   vehicleType: string;
   returnDate?: string;
+  email: string;
   addOns: SelectedAddOn[];
 }
 

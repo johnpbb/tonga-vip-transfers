@@ -140,7 +140,7 @@ app.post('/api/create-anz-session', async (req, res) => {
 
 // API Endpoint to send emails and save booking
 app.post('/api/send-email', (req, res) => {
-    const { subject, text, html, paymentIntentId, ...bookingData } = req.body;
+    const { subject, text, html, paymentIntentId, email, ...bookingData } = req.body;
 
     // Save booking to local file
     const newBooking = {
@@ -148,6 +148,7 @@ app.post('/api/send-email', (req, res) => {
         createdAt: new Date().toISOString(),
         paymentStatus: paymentIntentId ? 'Paid' : 'Pending/Quote',
         paymentIntentId,
+        email,
         ...bookingData
     };
 
@@ -160,7 +161,7 @@ app.post('/api/send-email', (req, res) => {
 
     const mailOptions = {
         from: '"Tonga VIP Website" <info@tongaviptransfers.com>',
-        to: 'info@tongaviptransfers.com',
+        to: email ? `info@tongaviptransfers.com, ${email}` : 'info@tongaviptransfers.com',
         subject: subject || 'New Message from Website',
         text: text,
         html: html || text // Use text as fallback for html
