@@ -319,20 +319,20 @@ Add-ons: ${addonsList || 'None'}
   return (
     <ThemeProvider theme={muiTheme}>
       <LocalizationProvider dateAdapter={AdapterDayjs}>
-        <div className="bg-white p-6 md:p-8 rounded-xl shadow-2xl min-h-[500px]">
+        <div ref={containerRef} className={`bg-white p-6 md:p-8 rounded-xl shadow-2xl flex flex-col relative overflow-hidden ${step === 0 ? '' : 'h-[600px]'}`}>
           {step === 0 && (
-            <div className="animate-fade-in">
-              <div className="text-center mb-6">
+            <div className="animate-fade-in flex-1 p-1">
+              <div className="text-center mb-2">
                 <h3 className="text-2xl font-bold text-black mb-1">Book Your Ride</h3>
                 <p className="text-gray-600">Reliable. Fixed Price. Instant.</p>
               </div>
-              <form onSubmit={(e) => { e.preventDefault(); handleNextStep(); }} className="space-y-6">
+              <form onSubmit={(e) => { e.preventDefault(); handleNextStep(); }} className="space-y-3 pb-2">
                 {/* Trip Type */}
                 <div className="flex justify-center">
                   <div className="inline-flex bg-white border border-gray-200 rounded-full p-1 shadow-sm">
                     {['oneway', 'return'].map((type) => (
                       <button key={type} type="button" onClick={() => setTripType(type as TripType)}
-                        className={`px-6 py-2 rounded-full text-sm font-semibold transition-all ${tripType === type ? 'bg-tonga-red text-white shadow-md' : 'text-gray-500 hover:text-gray-700'}`}>
+                        className={`px-6 py-1 rounded-full text-sm font-semibold transition-all ${tripType === type ? 'bg-tonga-red text-white shadow-md' : 'text-gray-500 hover:text-gray-700'}`}>
                         {type === 'oneway' ? 'One Way' : 'Return'}
                       </button>
                     ))}
@@ -340,13 +340,13 @@ Add-ons: ${addonsList || 'None'}
                 </div>
 
                 {/* Pickup Context */}
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-2 gap-3">
                   <button type="button" onClick={() => handlePickupContextChange('airport')}
-                    className={`flex flex-col items-center p-4 border rounded-xl ${pickupContext === 'airport' ? 'border-tonga-red bg-red-50 text-tonga-red' : 'border-gray-200'}`}>
+                    className={`flex flex-col items-center p-3 border rounded-xl ${pickupContext === 'airport' ? 'border-tonga-red bg-red-50 text-tonga-red' : 'border-gray-200'}`}>
                     <span className="font-bold">Airport Pickup</span>
                   </button>
                   <button type="button" onClick={() => handlePickupContextChange('hotel')}
-                    className={`flex flex-col items-center p-4 border rounded-xl ${pickupContext === 'hotel' ? 'border-tonga-red bg-red-50 text-tonga-red' : 'border-gray-200'}`}>
+                    className={`flex flex-col items-center p-3 border rounded-xl ${pickupContext === 'hotel' ? 'border-tonga-red bg-red-50 text-tonga-red' : 'border-gray-200'}`}>
                     <span className="font-bold">Hotel Pickup</span>
                   </button>
                 </div>
@@ -362,65 +362,69 @@ Add-ons: ${addonsList || 'None'}
                   {tripType === 'return' && <DatePicker label="Return Date" value={formData.returnDate ? dayjs(formData.returnDate) : null} onChange={handleDateChange('returnDate')} slotProps={{ textField: { fullWidth: true } }} />}
                 </div>
 
-                <Button variant="primary" fullWidth type="submit" className="rounded-full text-lg mt-4">Next: Passengers & Add-ons</Button>
+                <Button variant="primary" fullWidth type="submit" className="rounded-full text-lg mt-2">Next: Passengers & Add-ons</Button>
               </form>
             </div>
           )}
 
           {step === 1 && (
-            <div className="animate-fade-in space-y-8">
-              <div className="flex items-center gap-2 mb-4">
+            <div className="animate-fade-in flex flex-col h-full">
+              {/* Header */}
+              <div className="flex items-center gap-2 mb-4 shrink-0">
                 <button onClick={() => setStep(0)} className="text-gray-400 hover:text-gray-600">
                   <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
                 </button>
                 <h3 className="text-xl font-bold">Passengers & Extras</h3>
               </div>
 
-              {/* Passengers */}
-              <div className="space-y-4 border-b border-gray-100 pb-6">
-                <h4 className="font-bold text-gray-800">Passengers</h4>
-                <div className="flex justify-between items-center">
-                  <span className="text-gray-600">Adults</span>
-                  <Counter value={formData.passengerCounts.adults} onChange={(d) => updatePassengerCount('adults', d)} />
+              {/* Scrollable Content */}
+              <div className="flex-1 overflow-y-auto pr-2 space-y-6 pb-4">
+                {/* Passengers */}
+                <div className="space-y-4 border-b border-gray-100 pb-6">
+                  <h4 className="font-bold text-gray-800">Passengers</h4>
+                  <div className="flex justify-between items-center">
+                    <span className="text-gray-600">Adults</span>
+                    <Counter value={formData.passengerCounts.adults} onChange={(d) => updatePassengerCount('adults', d)} />
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span className="text-gray-600">Children (3-11 yrs)</span>
+                    <Counter value={formData.passengerCounts.children} onChange={(d) => updatePassengerCount('children', d)} />
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span className="text-gray-600">Infants (0-2 yrs)</span>
+                    <Counter value={formData.passengerCounts.infants} onChange={(d) => updatePassengerCount('infants', d)} />
+                  </div>
                 </div>
-                <div className="flex justify-between items-center">
-                  <span className="text-gray-600">Children (3-11 yrs)</span>
-                  <Counter value={formData.passengerCounts.children} onChange={(d) => updatePassengerCount('children', d)} />
-                </div>
-                <div className="flex justify-between items-center">
-                  <span className="text-gray-600">Infants (0-2 yrs)</span>
-                  <Counter value={formData.passengerCounts.infants} onChange={(d) => updatePassengerCount('infants', d)} />
-                </div>
-              </div>
 
-              {/* Bags */}
-              <div className="space-y-4 border-b border-gray-100 pb-6">
-                <div className="flex justify-between items-center">
-                  <h4 className="font-bold text-gray-800">Bags</h4>
-                  <Counter value={formData.bags} onChange={updateBags} />
+                {/* Bags */}
+                <div className="space-y-4 border-b border-gray-100 pb-6">
+                  <div className="flex justify-between items-center">
+                    <h4 className="font-bold text-gray-800">Bags</h4>
+                    <Counter value={formData.bags} onChange={updateBags} />
+                  </div>
                 </div>
-              </div>
 
-              {/* Add-ons */}
-              <div>
-                <h4 className="font-bold text-gray-800 mb-4">Add-Ons</h4>
-                <div className="space-y-4">
-                  {AVAILABLE_ADDONS.map(addon => (
-                    <div key={addon.id} className="flex gap-4 items-center border border-gray-100 p-3 rounded-lg hover:border-red-100 transition-colors">
-                      <img src={addon.image} alt={addon.name} className="w-16 h-16 object-contain rounded bg-gray-50" />
-                      <div className="flex-1">
-                        <div className="font-bold text-sm">{addon.name}</div>
-                        <div className="text-xs text-gray-500">{addon.description}</div>
-                        <div className="font-semibold text-tonga-red mt-1">FJD {addon.price.toFixed(2)}</div>
+                {/* Add-ons */}
+                <div>
+                  <h4 className="font-bold text-gray-800 mb-4">Add-Ons</h4>
+                  <div className="space-y-4">
+                    {AVAILABLE_ADDONS.map(addon => (
+                      <div key={addon.id} className="flex gap-4 items-center border border-gray-100 p-3 rounded-lg hover:border-red-100 transition-colors">
+                        <img src={addon.image} alt={addon.name} className="w-16 h-16 object-contain rounded bg-gray-50" />
+                        <div className="flex-1">
+                          <div className="font-bold text-sm">{addon.name}</div>
+                          <div className="text-xs text-gray-500">{addon.description}</div>
+                          <div className="font-semibold text-tonga-red mt-1">FJD {addon.price.toFixed(2)}</div>
+                        </div>
+                        <Counter value={getAddOnQty(addon.id)} onChange={(d) => updateAddOn(addon.id, d)} />
                       </div>
-                      <Counter value={getAddOnQty(addon.id)} onChange={(d) => updateAddOn(addon.id, d)} />
-                    </div>
-                  ))}
+                    ))}
+                  </div>
                 </div>
               </div>
 
-              {/* Total Bar */}
-              <div className="bg-gray-50 -mx-6 -mb-6 p-6 mt-8 rounded-b-xl flex justify-between items-center border-t">
+              {/* Fixed Footer */}
+              <div className="bg-gray-50 -mx-6 -mb-6 md:-mx-8 md:-mb-8 p-6 border-t mt-auto shrink-0 flex justify-between items-center">
                 <div>
                   <div className="text-sm text-gray-500">Total Estimate</div>
                   <div className="text-xl font-bold text-tonga-red">${totalAmount.toFixed(2)}</div>
@@ -433,7 +437,7 @@ Add-ons: ${addonsList || 'None'}
           )}
 
           {step === 2 && clientSecret && (
-            <div className="animate-fade-in">
+            <div className="animate-fade-in flex-1 overflow-y-auto p-1">
               <Elements stripe={stripePromise} options={{ clientSecret, appearance: { theme: 'stripe' } }}>
                 <PaymentForm onSuccess={handlePaymentSuccess} onBack={() => setStep(1)} amount={totalAmount} />
               </Elements>
