@@ -1,9 +1,14 @@
 const express = require('express');
 const path = require('path');
 const fs = require('fs');
+require('dotenv').config(); // Load env vars if .env exists
 
 const app = express();
 const nodemailer = require('nodemailer');
+
+// Initialize Stripe
+const stripeKey = process.env.STRIPE_SECRET_KEY;
+const stripe = stripeKey ? require('stripe')(stripeKey) : null;
 
 const BOOKINGS_FILE = path.join(__dirname, 'bookings.json');
 
@@ -31,14 +36,40 @@ const saveBooking = (booking) => {
 // Parse JSON bodies (as sent by API clients)
 app.use(express.json());
 
+// API Endpoint to create a Payment Intent
+app.post('/api/create-payment-intent', async (req, res) => {
+    if (!stripe) {
+        return res.status(500).send({ error: { message: "Stripe is not configured on the server." } });
+    }
+
+    try {
+        const { amount, currency } = req.body;
+        // In a real app, you should validate the amount on the server
+        const paymentIntent = await stripe.paymentIntents.create({
+            amount: Math.round(parseFloat(amount) * 100), // Convert to cents
+            currency: currency || 'usd',
+            automatic_payment_methods: {
+                enabled: true,
+            },
+        });
+
+        res.send({
+            clientSecret: paymentIntent.client_secret,
+        });
+    } catch (e) {
+        console.error('Stripe error:', e);
+        res.status(400).send({ error: { message: e.message } });
+    }
+});
+
 // Configure Email Transporter
 const transporter = nodemailer.createTransport({
     host: 'smtp.us.opalstack.com',
     port: 465,
     secure: true, // true for 465, false for other ports
     auth: {
-        user: 'info_tvip',
-        pass: 'TtSOJGTWCEe6di3'
+        user: process.env.EMAIL_USER || 'info_tvip',
+        pass: process.env.EMAIL_PASS || 'TtSOJGTWCEe6di3'
     }
 });
 
